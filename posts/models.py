@@ -6,7 +6,7 @@ from django.utils.text import slugify
 # Create your models here.
 class Post(BaseModel):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     article = models.TextField(max_length=2000)
     
     def __str__(self) -> str:
