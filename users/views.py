@@ -12,3 +12,7 @@ def register(request):
             return redirect('/')
     form = CustomUserCreationForm
     return render(request, 'users/register.html', {'form':form})
+
+
+def login_user(request):
+    return render(request, 'users/login_user.html')
