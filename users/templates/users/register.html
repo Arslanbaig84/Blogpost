@@ -6,5 +6,49 @@
 {% endblock %}
 
 {% block body %}
-    {{form.as_p}}
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3 row">
+            <label for="Username" class="col-sm-2 col-form-label">Username</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control-username" id="Username" placeholder="Username" name="username" autofocus>
+            <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="Email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-10">
+            <input type="email" class="form-control-email" id="Email" placeholder="email@example.com" name="email" required>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="FirstName" class="col-sm-2 col-form-label">First Name</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control-firstname" id="FirsName" placeholder="First Name" name="first_name">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="LastName" class="col-sm-2 col-form-label">Last Name</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control-lastname" id="LastName" placeholder="Last Name" name="last_name">
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label for="Password" class="col-sm-2 col-form-label">Password</label>
+            <div class="col-sm-10">
+            <input type="password" class="form-control-password" id="Password" name="password1" placeholder="Password" required>
+            <span class="helptext"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></span>
+        </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="Password" class="col-sm-2 col-form-label">Confirm Password</label>
+            <div class="col-sm-10">
+            <input type="password" class="form-control-password" id="Password" name="password2" placeholder="Confirm Password" required>
+            <span class="helptext">Enter the same password as before, for verification.</span>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
 {% endblock %}
