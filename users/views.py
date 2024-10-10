@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomerUserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -39,3 +39,12 @@ def logout_user(request):
     logout(request)
     messages.info(request, 'Logged Out')
     return redirect('login_user')
+
+
+def profile(request):
+    return render(request, 'users/profile.html')
+
+
+def edit_profile(request):
+    form = CustomerUserChangeForm(instance=request.user)
+    return render(request, 'users/profile.html', {'form':form})

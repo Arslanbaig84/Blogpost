@@ -1,0 +1,39 @@
+{% extends 'base/layout.html' %}
+
+
+{% block title %}
+    Profile({{request.user}})
+{% endblock %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+<h1>Welcome, {{user.username}}</h1>
+<table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Email</th>
+        <td>{{user.email}}</td>
+      </tr>
+      <tr>
+        <th scope="row">First Name</th>
+        <td>{{user.first_name}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Last Name</th>
+        <td>{{user.last_name}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Date Joined</th>
+        <td>{{user.date_joined}}</td>
+      </tr>
+    </tbody>
+  </table>
+  
+    <a href="{% url 'profile' %}">
+        <button class="btn btn-primary mb-3">Edit Profile</button>
+    </a>
+
+{% endif %}
+
+{% endblock %}

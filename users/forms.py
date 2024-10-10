@@ -12,7 +12,6 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomerUserChangeForm(UserChangeForm):
-    email = forms.EmailField(required=True)
     password = ReadOnlyPasswordHashField()
 
     class Meta:
