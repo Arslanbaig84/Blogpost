@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm, CustomerUserChangeForm
+from .forms import CustomUserCreationForm #, CustomerUserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -44,7 +44,17 @@ def logout_user(request):
 def profile(request):
     return render(request, 'users/profile.html')
 
-
+"""
 def edit_profile(request):
+    if request.method == 'POST':
+        form = CustomerUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile')
+        else:
+            print(form.errors)
+
     form = CustomerUserChangeForm(instance=request.user)
-    return render(request, 'users/profile.html', {'form':form})
+    return render(request, 'users/edit_profile.html', {'form':form})
+"""
