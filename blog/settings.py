@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base',
     'posts',
     'users',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
