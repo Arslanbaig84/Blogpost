@@ -7,9 +7,16 @@ Posts
 {% block body %}
     {% for post in posts %}
         <div>
-            <a href="{% url 'post' post.slug %}">
-                <h1>{{post.title}}</h1>
-            </a>
+            {% load thumbnail %}
+            <h1>
+                <a href="{% url 'post' post.slug %}">{{post.title}} </a>
+                by {{post.author.username}}
+                {% thumbnail post.author.profile.image "50x50" crop="center" as im %}
+                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                {% endthumbnail %}
+
+            </h1>
+            
             <p>{{post.created_at}}</p>
             <p style="height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{post.article}}</p>
             <hr>
