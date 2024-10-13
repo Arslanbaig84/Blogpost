@@ -3,6 +3,7 @@ from .forms import CustomUserCreationForm #, CustomerUserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def register(request):
@@ -35,14 +36,22 @@ def login_user(request):
     return render(request, 'users/login_user.html')
 
 
+@login_required(login_url="/users/login_user/")
 def logout_user(request):
     logout(request)
     messages.info(request, 'Logged Out')
     return redirect('login_user')
 
 
+@login_required(login_url="/users/login_user/")
 def profile(request):
     return render(request, 'users/profile.html')
+
+
+@login_required(login_url="/users/login_user/")
+def userprofile(request, username):
+    user_profile = User.objects.get(username=username)
+    return render(request, 'users/userprofile.html', {'user_profile':user_profile})
 
 """
 def edit_profile(request):

@@ -7,7 +7,7 @@
 {% block body %}
     <a href="{% url 'index' %}"><- Go back</a>
     <h1>{{post.title}} by 
-        <a href="{% url 'profile' %}">{{post.author.username}}</a>
+        <a href="{% url 'userprofile' post.author.username %}">{{post.author.username}}</a>
     </h1>
     <p>{{post.created_at}}</p>
     <p>{{post.article}}</p>
