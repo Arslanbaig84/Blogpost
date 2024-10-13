@@ -15,7 +15,8 @@ def new_post(request):
         if form.is_valid():
             title = form.cleaned_data['title']
             article = form.cleaned_data['article']
-            Post.objects.create(title=title, article=article)
+            author = request.user
+            Post.objects.create(title=title, article=article, author=author)
             messages.success(request, 'New Post added successfully.')
             return redirect('/posts/')
     form = PostForm()
