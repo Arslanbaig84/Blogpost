@@ -2,7 +2,7 @@
 
 
 {% block title %}
-    Profile({{user_profile.username}})
+    Profile: {{user_profile.user_p.username}}
 {% endblock %}
 
 {% block body %}
@@ -12,20 +12,24 @@
     <tbody>
       <tr>
         <th scope="row">First Name</th>
-        <td>{{user_profile.first_name}}</td>
+        <td>{{user_profile.user_p.first_name}}</td>
       </tr>
       <tr>
         <th scope="row">Last Name</th>
-        <td>{{user_profile.last_name}}</td>
+        <td>{{user_profile.user_p.last_name}}</td>
       </tr>
       <tr>
         <th scope="row">Author Since</th>
-        <td>{{user_profile.date_joined}}</td>
+        <td>{{user_profile.user_p.date_joined}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Total Posts</th>
+        <td>{{user_profile.total_posts}}</td>
       </tr>
       <tr>
         <th scope="row">Image</th>
         <td>
-            <img src="{{user_profile.profile.image.url}}" alt="arslan" style="width: 100px;">
+            <img src="{{user_profile.user_p.profile.image.url}}" alt="arslan" style="width: 100px;">
         </td>
       </tr>
     </tbody>

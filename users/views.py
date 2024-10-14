@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from posts.models import Post
 
 # Create your views here.
 def register(request):
@@ -50,7 +51,11 @@ def profile(request):
 
 @login_required(login_url="/users/login_user/")
 def userprofile(request, username):
-    user_profile = User.objects.get(username=username)
+    user_p = User.objects.get(username=username)
+    user_profile = {
+        'user_p':user_p,
+        'total_posts':Post.objects.filter(author__username=username).count()
+    }
     return render(request, 'users/userprofile.html', {'user_profile':user_profile})
 
 """
