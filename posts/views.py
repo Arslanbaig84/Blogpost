@@ -3,13 +3,22 @@ from .models import Post
 from .forms import PostForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from followers.models import Follow
 
 
 # Create your views here.
 @login_required(login_url="/users/login_user/")
 def posts(request):
-    posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'posts/index.html', {'posts':posts})
+    following = list(
+                Follow.objects.filter(followed_by=request.user).values_list('following', flat=True)
+            )
+    if not following:
+        posts = Post.objects.all().order_by('-created_at')
+        return render(request, 'posts/index.html', {'posts':posts})
+    else:
+        posts = Post.objects.filter(author__in=following).order_by('-created_at')[0:60]
+        return render(request, 'posts/index.html', {'posts':posts})
+
 
 
 @login_required(login_url="/users/login_user/")
