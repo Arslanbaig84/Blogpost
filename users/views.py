@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomUserCreationForm #, CustomerUserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from posts.models import Post
+from followers.models import Follow  # Import the Follow model
+
+
 
 # Create your views here.
 def register(request):
@@ -51,12 +54,25 @@ def profile(request):
 
 @login_required(login_url="/users/login_user/")
 def userprofile(request, username):
-    user_p = User.objects.get(username=username)
+    # Get the user whose profile is being viewed
+    user_p = get_object_or_404(User, username=username)
+    
+    # Check if the current logged-in user follows this user
+    is_followed = Follow.objects.filter(followed_by=request.user, following=user_p).exists()
+
+    # Get the total number of posts by the user
+    total_posts = Post.objects.filter(author__username=username).count()
+
+    # Prepare the context
     user_profile = {
-        'user_p':user_p,
-        'total_posts':Post.objects.filter(author__username=username).count()
+        'user_p': user_p,
+        'total_posts': total_posts,
+        'is_followed': is_followed  # Pass the follow status to the template
     }
-    return render(request, 'users/userprofile.html', {'user_profile':user_profile})
+
+    return render(request, 'users/userprofile.html', {'user_profile': user_profile})
+
+
 
 """
 def edit_profile(request):

@@ -1,44 +1,49 @@
 {% extends 'base/layout.html' %}
 
-
 {% block title %}
-    Profile: {{user_profile.user_p.username}}
+    Profile: {{ user_profile.user_p.username }}
 {% endblock %}
 
 {% block body %}
-
 {% if user.is_authenticated %}
 <table class="table">
     <tbody>
       <tr>
         <th scope="row">First Name</th>
-        <td>{{user_profile.user_p.first_name}}</td>
+        <td>{{ user_profile.user_p.first_name }}</td>
       </tr>
       <tr>
         <th scope="row">Last Name</th>
-        <td>{{user_profile.user_p.last_name}}</td>
+        <td>{{ user_profile.user_p.last_name }}</td>
       </tr>
       <tr>
         <th scope="row">Author Since</th>
-        <td>{{user_profile.user_p.date_joined}}</td>
+        <td>{{ user_profile.user_p.date_joined }}</td>
       </tr>
       <tr>
         <th scope="row">Total Posts</th>
-        <td>{{user_profile.total_posts}}</td>
+        <td>{{ user_profile.total_posts }}</td>
       </tr>
       <tr>
         <th scope="row">Image</th>
         <td>
-            <img src="{{user_profile.user_p.profile.image.url}}" alt="arslan" style="width: 100px;">
+            <img src="{{ user_profile.user_p.profile.image.url }}" alt="{{ user_profile.user_p.username }}" style="width: 100px;">
         </td>
       </tr>
     </tbody>
   </table>
 
-    <a href="#">
-        <button class="btn btn-primary mb-3">Edit Profile</button>
-    </a>
-
+  {% if request.user != user_profile.user_p %}
+    <form action="{% if user_profile.is_followed %}{% url 'unfollow_user' user_profile.user_p.username %}{% else %}{% url 'follow_user' user_profile.user_p.username %}{% endif %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">
+        {% if user_profile.is_followed %}
+          Unfollow
+        {% else %}
+          Follow
+        {% endif %}
+      </button>
+    </form>
+  {% endif %}
 {% endif %}
-
 {% endblock %}
