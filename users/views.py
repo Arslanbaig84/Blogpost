@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm #, CustomerUserChangeForm
+from .forms import CustomUserCreationForm, CustomerUserChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from posts.models import Post
-from followers.models import Follow  # Import the Follow model
+from followers.models import Follow
 
 
 
@@ -73,8 +73,6 @@ def userprofile(request, username):
     return render(request, 'users/userprofile.html', {'user_profile': user_profile})
 
 
-
-"""
 def edit_profile(request):
     if request.method == 'POST':
         form = CustomerUserChangeForm(request.POST, instance=request.user)
@@ -87,4 +85,3 @@ def edit_profile(request):
 
     form = CustomerUserChangeForm(instance=request.user)
     return render(request, 'users/edit_profile.html', {'form':form})
-"""

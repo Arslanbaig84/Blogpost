@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm #, UserChangeForm, ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, ReadOnlyPasswordHashField
 from django.contrib.auth.models import User
 
 
@@ -10,9 +10,9 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
 
-"""
+
 class CustomerUserChangeForm(UserChangeForm):
-#    password = ReadOnlyPasswordHashField()
+    password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
@@ -24,8 +24,7 @@ class CustomerUserChangeForm(UserChangeForm):
         self.fields['password'].widget = forms.HiddenInput()
     
     def clean_username(self):
-    username = self.cleaned_data['username']
-    if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
-        raise forms.ValidationError("A user with that username already exists.")
-    return username
-"""
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            raise forms.ValidationError("A user with that username already exists.")
+        return username
